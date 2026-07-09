@@ -52,7 +52,7 @@ def home():
     conn.close()
 
     html = '''
-    <h1>🍺 Benedictine Brewery - Daily Check-in</h1>
+    <h1>🍺 Benedictine Brewery - Daily Check-in </h1>
     <form method="post">
         <textarea name="note" rows="4" cols="50" placeholder="How are you today? Energy, mood, gratitude..."></textarea><br><br>
         <input type="submit" value="Save Entry">
