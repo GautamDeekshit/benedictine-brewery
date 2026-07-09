@@ -67,6 +67,25 @@ def home():
     '''
     return render_template_string(html, entries=entries)
 
+@app.route('/monk')
+def monk_secret():
+    password = request.args.get('pass')
+    if password == "ora et labora":
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT timestamp, note FROM notes ORDER BY timestamp DESC")
+        all_entries = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        html = "<h1>🙏 Secret Monk Archive</h1><ul>"
+        for ts, note in all_entries:
+            html += f"<li><strong>{ts}</strong><br>{note}</li>"
+        html += "</ul>"
+        return html
+    else:
+        return "<h1>Access Denied. Only true monks may enter.</h1>", 403
+
 if __name__ == "__main__":
     init_db()
     app.run(host="0.0.0.0", port=5050, debug=False)
